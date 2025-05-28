@@ -1,0 +1,92 @@
+[
+    {
+      "name": "Arijit Singh Live in Concert",
+      "description": "Experience the soulful voice of India's most beloved singer live!",
+      "price": 4999.99,
+      "totalTickets": 100,
+      "location": "Jawaharlal Nehru Stadium, Delhi",
+      "eventDate": 1755381600000,
+      "userId": "user_2bFMHkGxZPWVVyJ5QEJQxfsCkxB"
+    },
+    {
+      "name": "IPL 2025 - Mumbai Indians vs Chennai Super Kings",
+      "description": "Witness the biggest rivalry in Indian cricket!",
+      "price": 8999.99,
+      "totalTickets": 50,
+      "location": "Wankhede Stadium, Mumbai",
+      "eventDate": 1749427200000,
+      "userId": "user_2bFMHkGxZPWVVyJ5QEJQxfsCkxB"
+    },
+    {
+      "name": "Mughal-e-Azam - Musical",
+      "description": "Don't miss this spectacular adaptation of the classic Indian film!",
+      "price": 2999.99,
+      "totalTickets": 75,
+      "location": "NCPA, Mumbai",
+      "eventDate": 1753324200000,
+      "userId": "user_2dOPKmMyZRXXazL7SGLSzhsEmzD"
+    },
+    {
+      "name": "A.R. Rahman World Tour",
+      "description": "Join the Oscar-winning composer for an unforgettable night of music!",
+      "price": 1500.0,
+      "totalTickets": 200,
+      "location": "Indira Gandhi Indoor Stadium, Delhi",
+      "eventDate": 1757548800000,
+      "userId": "user_2dOPKmMyZRXXazL7SGLSzhsEmzD"
+    },
+    {
+      "name": "Comic Con India 2025",
+      "description": "India's biggest pop culture convention!",
+      "price": 850.0,
+      "totalTickets": 1000,
+      "location": "Bombay Exhibition Centre, Mumbai",
+      "eventDate": 1759708800000,
+      "userId": "user_2dOPKmMyZRXXazL7SGLSzhsEmzD"
+    },
+    {
+      "name": "Shreya Ghoshal Live in Concert",
+      "description": "An intimate evening with the melody queen performing her greatest hits",
+      "price": 1250.0,
+      "totalTickets": 150,
+      "location": "Siri Fort Auditorium, Delhi",
+      "eventDate": 1760918400000,
+      "userId": "user_2eRTLnPxYQWWbzM8THMTaisFnzE"
+    },
+    {
+      "name": "ISL Final 2025",
+      "description": "The grand finale of Indian Super League football",
+      "price": 1999.99,
+      "totalTickets": 60,
+      "location": "Salt Lake Stadium, Kolkata",
+      "eventDate": 1753929600000,
+      "userId": "user_2fQUMpNzXSVVczN9UINUbjsGozF"
+    },
+    {
+      "name": "Sunburn Festival 2025",
+      "description": "Asia's biggest electronic dance music festival",
+      "price": 4500.0,
+      "totalTickets": 80,
+      "location": "Mahalaxmi Racecourse, Mumbai",
+      "eventDate": 1756521600000,
+      "userId": "user_2gPVNqOyYTWWdzO0VJOVcktHpzG"
+    },
+    {
+      "name": "Wimbledon 2025 - Men's Final Screening",
+      "description": "Watch the tennis grand slam final with fellow enthusiasts",
+      "price": 750.0,
+      "totalTickets": 40,
+      "location": "The Leela Palace, Bangalore",
+      "eventDate": 1752114600000,
+      "userId": "user_2hQWOrPzZUXXezP1WKPWdluIqzH"
+    },
+    {
+      "name": "The Lion King - Hindi Version",
+      "description": "Disney's classic musical comes to life in Hindi",
+      "price": 1750.0,
+      "totalTickets": 100,
+      "location": "Royal Opera House, Mumbai",
+      "eventDate": 1758758400000,
+      "userId": "user_2iRXPsQAaVYYfAQ2XLQXemvJrzI"
+    }
+  ]
