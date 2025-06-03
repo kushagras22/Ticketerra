@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { mutation, query } from "./_generated/server";
+import { internalMutation, mutation, query } from "./_generated/server";
 import { WAITING_LIST_STATUS } from "./constants";
 
 export const getQueuePosition = query({
@@ -35,11 +35,28 @@ export const getQueuePosition = query({
       )
       .collect()
       .then((entries) => entries.length);
-    
-      return {
-        ...entry,
-        position: peopleAhead + 1
-      };
+
+    return {
+      ...entry,
+      position: peopleAhead + 1,
+    };
+  },
+});
+
+export const expireOffer = internalMutation({
+  args: {
+    waitingListId: v.id("waitingList"),
+    eventId: v.id("events"),
+  },
+  handler: async (ctx, { waitingListId, eventId }) => {
+    const offer = await ctx.db.get(waitingListId);
+    if (!offer || offer.status !== WAITING_LIST_STATUS.OFFERED) return;
+
+    await ctx.db.patch(waitingListId, {
+      status: WAITING_LIST_STATUS.EXPIRED,
+    });
+
+    await processQueue(ctx, { eventId });
   },
 });
 
@@ -48,17 +65,15 @@ export const releaseTicket = mutation({
     eventId: v.id("events"),
     waitingListId: v.id("waitingList"),
   },
-  handler: async(ctx, {eventId, waitingListId}) => {
+  handler: async (ctx, { eventId, waitingListId }) => {
     const entry = await ctx.db.get(waitingListId);
 
-    if(!entry || entry.status !== WAITING_LIST_STATUS.OFFERED) {
+    if (!entry || entry.status !== WAITING_LIST_STATUS.OFFERED) {
       throw new Error("No valid ticket offer found!");
     }
 
     await ctx.db.patch(waitingListId, {
-      status: WAITING_LIST_STATUS.EXPIRED
-    })
-  }
-
-  
-})
+      status: WAITING_LIST_STATUS.EXPIRED,
+    });
+  },
+});
