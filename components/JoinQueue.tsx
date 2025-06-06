@@ -4,27 +4,117 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation, useQuery } from "convex/react";
+import { ConvexError } from "convex/values";
+import Spinner from "./Spinner";
+import { WAITING_LIST_STATUS } from "@/convex/constants";
+import { Clock, OctagonXIcon } from "lucide-react";
 
 const JoinQueue = ({
   eventId,
   userId,
 }: {
   eventId: Id<"events">;
-  userId: Id<"users">;
+  userId: string;
 }) => {
   const { toast } = useToast();
   const joinWaitingList = useMutation(api.events.joinWaitingList);
   const queuePosition = useQuery(api.waitingList.getQueuePosition, {
     eventId,
-    userId
-  })
+    userId,
+  });
   const userTicket = useQuery(api.tickets.getUserTicketForEvent, {
     eventId,
-    userId
-  })
+    userId,
+  });
 
+  const availability = useQuery(api.events.getEventAvailability, { eventId });
+  const event = useQuery(api.events.getById, { eventId });
 
-  return <div>JoinQueue</div>;
+  const isEventOwner = userId === event?.userId;
+
+  const handleJoinQueue = async () => {
+    try {
+      const result = await joinWaitingList({ eventId, userId });
+      if (result.success) {
+        console.log("Successfully joined waiting list");
+        toast({
+          title: result.message,
+          duration: 5000,
+        });
+      }
+    } catch (error) {
+      if (
+        error instanceof ConvexError &&
+        error.message.includes("Joined the waiting list too many times")
+      ) {
+        toast({
+          variant: "destructive",
+          title: "Slow down there!",
+          description: error.data,
+          duration: 500,
+        });
+      } else {
+        console.error("Error joining waiting lsit:", error);
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "Failed to join queue. Please try again later.",
+        });
+      }
+    }
+  };
+
+  if (queuePosition === undefined || availability === undefined || !event) {
+    return <Spinner />;
+  }
+
+  if (userTicket) {
+    return null;
+  }
+
+  const isPastEvent = event.eventDate < Date.now();
+
+  return (
+    <div>
+      {(!queuePosition ||
+        queuePosition.status === WAITING_LIST_STATUS.EXPIRED ||
+        (queuePosition.status === WAITING_LIST_STATUS.OFFERED &&
+          queuePosition.offerExpiresAt &&
+          queuePosition.offerExpiresAt <= Date.now())) && (
+        <>
+          {isEventOwner ? (
+            <div className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-gray-100 text-gray-700 rounded-lg">
+              <OctagonXIcon className="w-5 h-5" />
+              <span>
+                Ticket purchases for this event are restricted to
+                non-organizers. If you are an event host, you do not need to buy
+                a ticket.
+              </span>
+            </div>
+          ) : isPastEvent ? (
+            <div className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gray-100 text-gray-500 rounded-lg cursor-not-allowed">
+              <Clock className="w-5 h-5" />
+              <span>Event has ended, see you next time.</span>
+            </div>
+          ) : availability.purchasedCount >= availability?.totalTickets ? (
+            <div className="text-center p-4">
+              <p className="text-lg font-semibold text-red-600">
+                Unfortunately, all spots have been filled.
+              </p>
+            </div>
+          ) : (
+            <button
+              onClick={handleJoinQueue}
+              disabled={isPastEvent || isEventOwner}
+              className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors duration-200 shadow-md flex items-center justify-center disabled:bg-gray-400 disabled:cursor-not-allowed"
+            >
+               Buy Tickets
+            </button>
+          )}
+        </>
+      )}
+    </div>
+  );
 };
 
 export default JoinQueue;

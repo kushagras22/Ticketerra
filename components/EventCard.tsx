@@ -153,7 +153,7 @@ const EventCard = ({ eventId }: { eventId: Id<"events"> }) => {
   return (
     <div
       onClick={() => router.push(`/event/${eventId}`)}
-      className={`bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 cursor-pointer overflow-hidden relative ${isPastEvent ? "opacity-75 hover:opacity-100" : ""}`}
+      className={`bg-white mulish rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 cursor-pointer overflow-hidden relative ${isPastEvent ? "opacity-75 hover:opacity-100" : ""}`}
     >
       {/* Event Image */}
       {imageUrl && (
@@ -191,10 +191,8 @@ const EventCard = ({ eventId }: { eventId: Id<"events"> }) => {
               </span>
             )}
           </div>
-        </div>
-
-        {/* Price Tag */}
-        <div className="flex flex-col items-start gap-2 ml-4">
+          {/* Price Tag */}
+        <div className="flex flex-col items-end -mt-2 gap-2 ml-4">
           <span
             className={`py-1.5 px-3 -ml-5 mt-2 font-semibold rounded-full ${isPastEvent ? "bg-gray-50 text-gray-500" : "bg-green-50 text-green-700"}`}
           >
@@ -206,6 +204,9 @@ const EventCard = ({ eventId }: { eventId: Id<"events"> }) => {
             </span>
           )}
         </div>
+        </div>
+
+        
 
         {/* Event Details */}
         <div className="mt-4 space-y-3">
