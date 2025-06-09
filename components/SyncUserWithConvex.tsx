@@ -1,7 +1,6 @@
 "use client";
 
 import { api } from "@/convex/_generated/api";
-import { updateUser } from "@/convex/users";
 import { useUser } from "@clerk/nextjs";
 import { useMutation } from "convex/react";
 import { useEffect } from "react";
