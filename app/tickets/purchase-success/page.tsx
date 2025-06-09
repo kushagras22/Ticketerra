@@ -5,7 +5,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 
-async function TicketSuccess() {
+export async function TicketSuccess() {
     const {userId} = await auth();
     if(!userId) redirect("/");
 
