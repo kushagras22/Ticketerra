@@ -27,7 +27,7 @@ export async function refundEventTickets(eventId: Id<"events">) {
   });
 
   const results = await Promise.allSettled(
-    tickets.map(async (ticket) => {
+    tickets.map(async (ticket: { _id: Id<"tickets">; paymentIntentId?: string }) => {
       try {
         if (!ticket.paymentIntentId) {
           throw new Error("Payment information not found");
@@ -57,7 +57,7 @@ export async function refundEventTickets(eventId: Id<"events">) {
   );
 
   const allSuccessful = results.every(
-    (result) => result.status === "fulfilled" && result.value.success
+    (result: PromiseSettledResult<{ success: boolean; ticketId: Id<"tickets">; error?: unknown }>) => result.status === "fulfilled" && result.value.success
   );
 
   if (!allSuccessful) {

@@ -6,6 +6,12 @@ import { useSearchParams } from "next/navigation";
 import EventCard from "@/components/EventCard";
 import { Search } from "lucide-react";
 import Spinner from "@/components/Spinner";
+import { Id } from "@/convex/_generated/dataModel";
+
+interface Event {
+  _id: Id<"events">;
+  eventDate: number;
+}
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
@@ -21,12 +27,12 @@ export default function SearchPage() {
   }
 
   const upcomingEvents = searchResults
-    .filter((event) => event.eventDate > Date.now())
-    .sort((a, b) => a.eventDate - b.eventDate);
+    .filter((event: Event) => event.eventDate > Date.now())
+    .sort((a: Event, b: Event) => a.eventDate - b.eventDate);
 
   const pastEvents = searchResults
-    .filter((event) => event.eventDate <= Date.now())
-    .sort((a, b) => b.eventDate - a.eventDate);
+    .filter((event: Event) => event.eventDate <= Date.now())
+    .sort((a: Event, b: Event) => b.eventDate - a.eventDate);
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
