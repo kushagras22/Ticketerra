@@ -12,12 +12,11 @@ export type Metrics = {
   revenue: number;
 };
 
-
 // const rateLimiter = new RateLimiter(components.rateLimiter, {
 //   queueJoin: {
 //     kind: "fixed window",
-//     rate: 3, 
-//     period: 30 * MINUTE, 
+//     rate: 3,
+//     period: 30 * MINUTE,
 //   },
 // });
 
@@ -211,7 +210,7 @@ export const joinWaitingList = mutation({
     if (!event) throw new Error("Event not found");
 
     const { available } = await checkAvailability(ctx, { eventId });
-
+    
     const now = Date.now();
 
     if (available) {
@@ -322,7 +321,7 @@ export const purchaseTicket = mutation({
       });
 
       console.log("Processing queue for next person");
-      await processQueue(ctx, { eventId });
+      await ctx.runMutation(internal.waitingList.processQueue, { eventId });
 
       console.log("Purchase ticket completed successfully");
     } catch (error) {

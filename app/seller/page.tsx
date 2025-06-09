@@ -1,6 +1,8 @@
 import SellerDashboard from '@/components/SellerDashboard';
 import { auth } from '@clerk/nextjs/server'
-import { redirect } from 'next/dist/server/api-utils';
+import { redirect } from 'next/navigation';
+
+
 import React from 'react'
 
 const SellerPage = async () => {

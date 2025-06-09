@@ -80,7 +80,7 @@ const EventForm = ({ mode, initialData }: EventFormProps) => {
       name: initialData?.name ?? "",
       description: initialData?.description ?? "",
       location: initialData?.location ?? "",
-      eventDate: initialData?.eventDate ?? "",
+      eventDate: initialData ? new Date(initialData.eventDate) : new Date(),
       price: initialData?.price ?? 0,
       totalTickets: initialData?.totalTickets ?? 1,
     },
